@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/bstabletest/">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>bootstrap-table实用配置</title>
+    <!-- jquery -->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- bootbox -->
+    <script src="https://cdn.bootcss.com/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+    <!-- bootstrap-table -->
+    <link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
+    <link href="../css/index.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+
+    <div class="row">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <button class="navbar-toggle" data-toggle="collapse" data-target="#collapseMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapseMenu">
+                <ul class="nav navbar-nav">
+                    <li class="nav-li">
+                    </li>
+                    <li class="nav-li">
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <h1 class="page-header">
+        服务查询功能的简单实用
+    </h1>
+
+    <!-- 查询工具栏 -->
+    <!--<div class="form-inline">-->
+        <!--<div class="form-group">-->
+            <!--<label for="queryNameText">姓名：</label>-->
+            <!--<input id="queryNameText" class="form-control input-sm">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label for="queryAgeText">年龄：</label>-->
+            <!--<input id="queryAgeText" class="form-control input-sm">-->
+        <!--</div>-->
+        <!--<button class="btn btn-primary btn-sm" id="queryBtn">查询</button>-->
+        <!--<button class="btn btn-primary btn-sm" id="resetBtn">重置</button>-->
+        <!--<button class="btn btn-primary btn-sm" id="addBtn">新增</button>-->
+    <!--</div>-->
+
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="queryESIP">&nbsp;ElasticSearch &nbsp; IP：</label>
+            <input id="queryESIP" class="form-control input-sm">
+        </div>
+        <button class="btn btn-primary btn-sm" id="queryESBtn">查询</button>
+        <button class="btn btn-primary btn-sm" id="queryESDBBtn">查询数据库列表</button>
+        <input id="esIndexList" class="form-control">
+        <br>
+        <br>
+        <div class="form-group">
+            <label for="queryIndex">请输入具体的index：</label>
+            <input id="queryIndex" class="form-control input-sm">
+        </div>
+        <button class="btn btn-primary btn-sm" id="queryESIndexField">查询ES索引字段</button>
+        <button class="btn btn-primary btn-sm" id="queryESIndexData">查询ES索引数据</button>
+    </div>
+    <hr>
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="queryMongoIP">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mongo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IP：</label>
+            <input id="queryMongoIP" class="form-control input-sm">
+        </div>
+        <button class="btn btn-primary btn-sm" id="queryMongoBtn">查询</button>
+        <button class="btn btn-primary btn-sm" id="queryMongoDBBtn">查询数据库列表</button>
+
+        <input id="mongoDBList" class="form-control">
+        <br>
+        <br>
+        <div class="form-group">
+            <label for="queryMongoTable">请输入具体的数据库名称：</label>
+            <input id="queryMongoTable" class="form-control input-sm">
+        </div>
+        <button class="btn btn-primary btn-sm" id="queryMongoTableBtn">查询Mongo数据表</button>
+    </div>
+
+
+    <!--<div class="col-sm-4">-->
+        <!--<div class="input-group">-->
+            <!--<input type="text" class="form-control" onkeydown="onKeyDown(event)"/>-->
+            <!--<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>-->
+        <!--</div>-->
+        <!--<div class="col-sm-4">-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+            <!--<script type="text/javascript">-->
+                <!--function onKeyDown(event) {-->
+                    <!--var e = event || window.event || arguments.callee.caller.arguments[0];-->
+                    <!--if (e && e.keyCode == 27) { // 按 Esc-->
+                        <!--//要做的事情-->
+                    <!--}-->
+                    <!--if (e && e.keyCode == 113) { // 按 F2-->
+                        <!--//要做的事情-->
+                    <!--}-->
+                    <!--if (e && e.keyCode == 13) { // enter 键-->
+                        <!--alert("此处回车触发搜索事件");-->
+                    <!--}-->
+
+                <!--}-->
+
+            <!--</script>-->
+            <hr>
+            <table id="testTable"></table>
+
+            <!-- 新增模态窗 -->
+            <div class="modal fade" id="addModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">新增信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label for="addNameText">姓名：</label>
+                                    <input id="addNameText" class="form-control input-sm">
+                                </div>
+                                <div class="form-group">
+                                    <label for="addAgeText">年龄：</label>
+                                    <input id="addAgeText" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="addAddressText">地址：</label>
+                                <input id="addAddressText" class="form-control input-sm">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-primary" id="saveAdd">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 修改模态窗 -->
+            <div class="modal fade" id="modifyModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">修改信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label for="modifyNameText">姓名：</label>
+                                    <input id="modifyNameText" class="form-control input-sm">
+                                </div>
+                                <div class="form-group">
+                                    <label for="modifyAgeText">年龄：</label>
+                                    <input id="modifyAgeText" class="form-control input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="modifyAddressText">地址：</label>
+                                <input id="modifyAddressText" class="form-control input-sm">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button class="btn btn-primary" id="saveModify">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  <!-- container-fluid -->
+
+        <script type="text/javascript" src="../js/index.js"></script>
+</body>
+</html>
